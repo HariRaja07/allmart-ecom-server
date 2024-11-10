@@ -4,18 +4,25 @@ const cors = require("cors");
 
 const AppError = require("./src/utils/appError");
 const globalErrorHandler = require("./src/controllers/errorController");
+const ProductRouter = require("./src/routers/ProductRoutes");
+const CategoryRouter = require("./src/routers/CategoryRoutes");
+
 
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
 
-const allowedOrigins = ["http://localhost:517344"];
+const allowedOrigins = ["http://localhost:5173"];
 app.use(
     cors({
         origin: allowedOrigins,
         credentials: true,
     })
 );
+
+app.use("/api/v1/product", ProductRouter);
+app.use("/api/v1/categories", CategoryRouter);
+
 
 
 app.get("/", (req, res) => {
