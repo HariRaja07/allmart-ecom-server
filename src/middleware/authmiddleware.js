@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userSchema");
 
 // Protect routes
-const protect = async (req, res, next) => {
+exports.protect = async (req, res, next) => {
   let token;
 
   //Read the jwt fromm the cookie
@@ -31,7 +31,7 @@ const protect = async (req, res, next) => {
 
 // Admin middleware
 
-const admin = (req, res, next) => {
+exports.admin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {
@@ -41,5 +41,3 @@ const admin = (req, res, next) => {
     });
   }
 };
-
-export { protect, admin };

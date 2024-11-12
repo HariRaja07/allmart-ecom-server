@@ -1,7 +1,7 @@
 const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 
-const authUser = async (req, res) => {
+exports.authUser = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -35,7 +35,7 @@ const authUser = async (req, res) => {
   }
 };
 
-const RegisterUser = async (req, res) => {
+exports.RegisterUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   const UserExists = await User.findOne({ email });
@@ -82,7 +82,7 @@ const RegisterUser = async (req, res) => {
   }
 };
 
-const logoutUser = async (req, res) => {
+exports.logoutUser = async (req, res) => {
   res.cookie("jwt", "", {
     httpOnly: true,
     expiresIn: new Date(0),
@@ -91,7 +91,7 @@ const logoutUser = async (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 };
 
-const getUserProfile = async (req, res) => {
+exports.getUserProfile = async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -112,7 +112,7 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-const updateUserProfile = async (req, res) => {
+exports.updateUserProfile = async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -142,7 +142,7 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-const getUser = async (req, res) => {
+exports.getUser = async (req, res) => {
   const user = await User.find({});
 
   if (user) {
@@ -155,7 +155,7 @@ const getUser = async (req, res) => {
   }
 };
 
-const getUserByID = async (req, res) => {
+exports.getUserByID = async (req, res) => {
   const user = await User.findById(req.params.id).select("-password");
 
   if (user) {
@@ -168,7 +168,7 @@ const getUserByID = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res) => {
   const user = await User.findById(req.params.id);
 
   if (user) {
@@ -188,7 +188,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+exports.updateUser = async (req, res) => {
   const user = await User.findById(req.params.id);
 
   if (user) {
@@ -213,16 +213,4 @@ const updateUser = async (req, res) => {
       message: "User Not Found",
     });
   }
-};
-
-export {
-  authUser,
-  RegisterUser,
-  logoutUser,
-  getUserProfile,
-  updateUserProfile,
-  getUser,
-  deleteUser,
-  getUserByID,
-  updateUser,
 };
