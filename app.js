@@ -7,6 +7,7 @@ const globalErrorHandler = require("./src/controllers/errorController");
 const ProductRouter = require("./src/routers/ProductRoutes");
 const CategoryRouter = require("./src/routers/CategoryRoutes");
 const userRouter = require("./src/routers/userRoutes");
+const cartRouter = require("./src/routers/cardRoutes");
 
 const app = express();
 app.use(cookieParser());
@@ -23,6 +24,7 @@ app.use(
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/product", ProductRouter);
 app.use("/api/v1/categories", CategoryRouter);
+app.use("/api/v1/cart", cartRouter);
 
 app.get("/", (req, res) => {
   res.send("API is running...");

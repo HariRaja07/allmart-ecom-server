@@ -215,7 +215,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-export {
+module.exports = {
   authUser,
   RegisterUser,
   logoutUser,
