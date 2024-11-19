@@ -3,10 +3,10 @@ const Category = require("../models/CategorySchema");  // Assuming you have a Ca
 
 // Create a new product
 exports.createProduct = async (req, res) => {
-  const { image, qrcode, name, category, stock, sellingprice, desc } = req.body;
+  const { image, qrcode, name, category, brand, stock, sellingprice, desc } = req.body;
 
   // Check if required fields are empty
-  if (!name || !category || stock === undefined || !sellingprice || !desc) {
+  if (!image || !qrcode || !name || !category || !brand || stock === undefined || !sellingprice || !desc) {
     return res.status(400).json({
       status: "fail",
       message:
@@ -32,7 +32,7 @@ exports.createProduct = async (req, res) => {
 // Get all products
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate("category");
+    const products = await Product.find().populate("category").populate("brand");
     res.status(200).json({
       status: "success",
       data: products,
