@@ -66,7 +66,13 @@ exports.createDeal = async (req, res) => {
 
   exports.getDeals = async (req, res) => {
     try {
-      const activeDeals = await Deal.find().populate("product");
+      const activeDeals = await Deal.find().populate({
+        path: 'product',  // Populating the 'product' field
+        populate: {
+          path: 'brand',   // Populating the 'brand' field inside 'product'
+          select: 'name',   // Only select the 'name' field from the 'Brand' model
+        }
+      });
       res.status(200).json({
         status: "success",
         data: {activeDeals},
@@ -89,7 +95,13 @@ exports.getActiveDeals = async (req, res) => {
       startDate: { $lte: currentDate },
       endDate: { $gte: currentDate },
     })
-      .populate('product')
+      .populate({
+        path: 'product',  // Populating the 'product' field
+        populate: {
+          path: 'brand',   // Populating the 'brand' field inside 'product'
+          select: 'name',   // Only select the 'name' field from the 'Brand' model
+        }
+      })
 
     if (!activeDeals.length) {
       return res.status(404).json({
@@ -114,7 +126,13 @@ exports.getActiveDeals = async (req, res) => {
 exports.getDealById = async (req, res) => {
   try {
     const deal = await Deal.findById(req.params.id)
-      .populate('product')
+      .populate({
+        path: 'product',  // Populating the 'product' field
+        populate: {
+          path: 'brand',   // Populating the 'brand' field inside 'product'
+          select: 'name',   // Only select the 'name' field from the 'Brand' model
+        }
+      })
 
     if (!deal) {
       return res.status(404).json({
