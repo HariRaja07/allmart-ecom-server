@@ -61,7 +61,7 @@ exports.getProductsByCategory = async (req, res) => {
     }
 
     // Find products that belong to this category
-    const products = await Product.find({ category: category._id }).populate("category");
+    const products = await Product.find({ category: category._id }).populate("category").populate("brand");
 
     if (products.length === 0) {
       return res.status(404).json({
