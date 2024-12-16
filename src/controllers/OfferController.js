@@ -41,7 +41,13 @@ exports.createOffer = async (req, res) => {
 // Get all products
 exports.getOffers = async (req, res) => {
   try {
-    const offers = await Offer.find().populate("category").populate("brand").populate("product");
+    const offers = await Offer.find().populate("category").populate("brand").populate("product").populate({
+      path: 'product',  // Populating the 'product' field
+      populate: {
+        path: 'brand',   // Populating the 'brand' field inside 'product'
+        select: 'name',   // Only select the 'name' field from the 'Brand' model
+      }
+    });
     res.status(200).json({
       status: "success",
       data: {offers},
@@ -57,7 +63,13 @@ exports.getOffers = async (req, res) => {
 // Get a single product by ID
 exports.getOfferById = async (req, res) => {
   try {
-    const offer = await Offer.findById(req.params.id).populate("category").populate("brand").populate("product");
+    const offer = await Offer.findById(req.params.id).populate("category").populate("brand").populate("product").populate({
+      path: 'product',  // Populating the 'product' field
+      populate: {
+        path: 'brand',   // Populating the 'brand' field inside 'product'
+        select: 'name',   // Only select the 'name' field from the 'Brand' model
+      }
+    });
     if (!offer) {
       return res.status(404).json({
         status: "fail",
