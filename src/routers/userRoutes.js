@@ -5,6 +5,7 @@ const DeletedAccount = require('../models/DeletedAccount'); // Create a model fo
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const wishlistController = require('../controllers/wishlistController');
 
 const router = express.Router();
 
@@ -274,5 +275,18 @@ router.post('/delete-account', authenticate, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// --- Wishlist Routes ---
+
+// Add product to wishlist
+router.post('/wishlist/add', authenticate, wishlistController.addToWishlist);
+
+// Remove product from wishlist
+router.delete('/wishlist/remove', authenticate, wishlistController.removeFromWishlist);
+
+// Get user's wishlist
+router.get('/wishlist', authenticate, wishlistController.getUserWishlist);
+
+
 
 module.exports = router;
