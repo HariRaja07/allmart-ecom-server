@@ -17,7 +17,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174", "https://allmart7.netlify.app", "https://genuine-sawine-75c421.netlify.app"];
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174", "https://allmart7.netlify.app", "https://allmart-admin.netlify.app"];
 app.use(
   cors({
     origin: allowedOrigins,
